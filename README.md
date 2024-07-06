@@ -1,6 +1,3 @@
 # TO_DO_LIST_APP
 
-<video width="640" height="360" controls>
-  <source src="todo-App-Video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Watch the video](https://github.com/Abdelrahmanosama372/CodeAlpha_TO_DO_LIST_APP/todo-App-Video.mp4)
