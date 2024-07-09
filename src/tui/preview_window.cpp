@@ -34,9 +34,6 @@ void PreviewWindow::display() {
             std::string("Creation date: ") + this->todo.getCreationDate(),
         };
     }
-
-    wbkgd(*win, COLOR_PAIR(2));
-    wattron(*win, COLOR_PAIR(2));
     
     int currRow = 0;
    for (const auto& str : previewData)
@@ -45,16 +42,15 @@ void PreviewWindow::display() {
         while (i < str.length())
         {
             mvwprintw(*win, currRow + 1, 1, str.substr(i, winCols).c_str());
-            wclrtoeol(*win);
             i += winCols;
             currRow++;
         }
     } 
-    wattroff(*win, COLOR_PAIR(2));
     wrefresh(*win);
 }
 
 void PreviewWindow::update() {
+    this->clearWin();
     this->display();
 }
 

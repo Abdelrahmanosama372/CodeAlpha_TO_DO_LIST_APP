@@ -5,6 +5,7 @@
 #define COLOR_BLUE_CUSTOM   10
 #define COLOR_SKY_CUSTOM    11
 #define COLOR_GRAY_CUSTOM   12
+#define COLOR_DGRAY_CUSTOM   12
 
 static TodoController* todoControllerInstance = nullptr;
 
@@ -19,17 +20,32 @@ void TuiManager::tuiIntialize(std::array<std::shared_ptr<WindowBase>,5> &&_wins)
     // Initialize ncurses
     initscr();
 
+    // hide cursor
+    curs_set(0);
+
     // start color and init TUI colors
     start_color();
     init_color(COLOR_BLUE_CUSTOM, 27, 97, 292);
     init_color(COLOR_SKY_CUSTOM, 31, 513, 584);
-    init_color(COLOR_GRAY_CUSTOM, 921, 956, 964);
+    init_color(COLOR_GRAY_CUSTOM, 200, 202, 205);
+    init_color(COLOR_DGRAY_CUSTOM, 73, 73, 74);
 
-    init_pair(1, COLOR_SKY_CUSTOM, COLOR_BLUE_CUSTOM);
-    init_pair(2, COLOR_GRAY_CUSTOM, COLOR_SKY_CUSTOM);
-   
 
-    // apply a background color for the stdscr
+    // background color
+    init_pair(1, COLOR_WHITE, COLOR_DGRAY_CUSTOM);
+
+    // window highlight color
+    init_pair(2, COLOR_SKY_CUSTOM, COLOR_DGRAY_CUSTOM);
+    
+    // info beside the todo name color
+    init_pair(3, COLOR_GRAY_CUSTOM, COLOR_DGRAY_CUSTOM);
+
+    // hover color for todo name
+    init_pair(4, COLOR_WHITE, COLOR_MAGENTA);
+
+    // hover color of info beside the todo name color
+    init_pair(5, COLOR_GRAY_CUSTOM, COLOR_MAGENTA);
+
     wbkgd(stdscr, COLOR_PAIR(1));
     refresh();
 
@@ -43,16 +59,11 @@ void TuiManager::tuiIntialize(std::array<std::shared_ptr<WindowBase>,5> &&_wins)
     }
 
    
-
-    
     this->wins = std::move(_wins);
     resizeAllWins();
     updateAllWins();
 
     this->currWinIt = this->wins.begin()+1;
-
-    // refresh();
-    // notify sys begin
 }
 
 void TuiManager::tuiRun() {
@@ -62,7 +73,10 @@ void TuiManager::tuiRun() {
     if(this->currWinIt >= this->wins.end())
         this->currWinIt = this->wins.end() - 1;
 
+    (*this->currWinIt)->winHighlight();
     char ch = (*this->currWinIt)->run();
+    (*this->currWinIt)->winUnHighlight();
+    (*this->currWinIt)->display();
 
     switch (ch)
     {
@@ -152,7 +166,6 @@ void TuiManager::resizeAllWins() {
     // category win
     this->wins[4]->setWin(xRest/2, yRest/2, inputWinSize + spacing + xRest/2 + spacing, yRest/2 + spacing);
 
-    // this->wins[1]->run();
 }
 
 
@@ -162,10 +175,6 @@ void TuiManager::updateAllWins() {
     }
 }
 
-
-void tuiRun(){
-
-}
 TuiManager::~TuiManager()
 {
     // End ncurses session

@@ -9,6 +9,7 @@ void WindowBase::setWin(unsigned int rows, unsigned int cols, unsigned int yPos,
         delwin(this->win);
     
     this->win = newwin(rows, cols, yPos, xPos);
+    wbkgd(this->win, COLOR_PAIR(1));
     box(win,0,0);
     mvwprintw(this->win, 0, 1, this->winName.c_str());
     wrefresh(this->win);
@@ -44,6 +45,24 @@ unsigned int WindowBase::getWinCols() const {
 
 char WindowBase::getUserInput() const {
     return wgetch(this->win);
+}
+
+void WindowBase::winHighlight() {
+    if(this->win) {
+        wattron(this->win, COLOR_PAIR(2));
+        box(this->win,0,0);
+        mvwprintw(this->win, 0, 1, this->getWinName().c_str());
+        wattroff(this->win, COLOR_PAIR(2));
+        wrefresh(this->win);
+    }
+}
+
+void WindowBase::winUnHighlight() {
+    if(this->win) {
+        box(this->win,0,0);
+        mvwprintw(this->win, 0, 1, this->getWinName().c_str());
+        wrefresh(this->win);
+    }
 }
 
 char WindowBase::run() {

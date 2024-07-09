@@ -5,10 +5,10 @@
 #include <chrono>
 
 enum class TodoPriority {
-    None,
-    Low,
+    High, 
     Medium,
-    High 
+    Low,
+    None,
 };
 
 class Todo

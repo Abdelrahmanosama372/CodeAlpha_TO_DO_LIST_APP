@@ -8,6 +8,7 @@ class CategoryWindow : public ScrollWindow
 public:
     CategoryWindow(std::string winName);
     char run() override;
+    void display() override;
 };
 
 #endif /* CATEGORY_WINDOW_HPP */

@@ -1,7 +1,7 @@
 #include "scroll_window.hpp"
 
 ScrollWindow::ScrollWindow(std::string winName)
-    : WindowBase(winName)
+    : WindowBase(winName), isActiveWin(false)
 { }
 
 void ScrollWindow::setRecords(std::vector<std::string> &&_records) {
@@ -90,27 +90,6 @@ void ScrollWindow::addRecord(const std::string &record) {
     this->winBegin = this->records.begin();
     this->CurrRecord = this->records.begin();
 }
-
-void ScrollWindow::display() {
-    WINDOW **win = this->getWin();
-    int i=0;
-
-    wbkgd(*win, COLOR_PAIR(2));
-    wattron(*win, COLOR_PAIR(2));
-
-    for(auto it = this->winBegin; it != this->winEnd; it++, i++) {
-        if(it == this->CurrRecord) {
-            wattron(*win, A_REVERSE);
-        }
-        mvwprintw(*win, i+1, 1, (*it).c_str());
-        wclrtoeol(*win);
-        wattroff(*win, A_REVERSE);        
-    }
-
-    wattroff(*win, COLOR_PAIR(2));
-    wrefresh(*win);
-}
-
 
 void ScrollWindow::update() {
     setWinFrame();

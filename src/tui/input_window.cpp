@@ -18,9 +18,6 @@ void InputWindow::display() {
     unsigned int inputSize = this->input.size();
     unsigned int winCols = this->getWinCols();
 
-    wbkgd(*win, COLOR_PAIR(2));
-    wattron(*win, COLOR_PAIR(2));
-
     if(inputSize == 0){
         mvwprintw(*win, 1, 1, "%*s", winCols - 1, " ");
     }else if(inputSize <= winCols){
@@ -28,8 +25,7 @@ void InputWindow::display() {
     }else {
         mvwprintw(*win, 1, 1, this->input.substr(inputSize - winCols).c_str());
     }
-
-    wattroff(*win, COLOR_PAIR(2));    
+   
     wrefresh(*win);
 }
 

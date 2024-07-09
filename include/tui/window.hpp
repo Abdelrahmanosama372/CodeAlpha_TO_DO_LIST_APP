@@ -27,9 +27,12 @@ public:
     
     char getUserInput() const;
 
+    void winHighlight();
+    void winUnHighlight();
+
     virtual char run();
-    virtual void display();
     virtual void update();
+    virtual void display();
 };
 
 

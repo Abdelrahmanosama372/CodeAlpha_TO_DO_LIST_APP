@@ -6,11 +6,12 @@
 
 class ScrollWindow : public WindowBase
 {
-private:
+protected:
     std::vector<std::string> records;
     std::vector<std::string>::iterator winBegin;
     std::vector<std::string>::iterator winEnd;
     std::vector<std::string>::iterator CurrRecord; // set to begin()
+    bool isActiveWin;
 public:
     ScrollWindow(std::string winName);
     void setRecords(std::vector<std::string> &&_records);
@@ -26,7 +27,6 @@ public:
     void deleteCurrRecord();
     void addRecord(const std::string &record);
     
-    void display() override;
     void update() override;
 };
 

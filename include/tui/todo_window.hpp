@@ -8,6 +8,7 @@ class TodoWindow : public ScrollWindow
 public:
     TodoWindow(std::string winName);
     char run() override;
+    void display() override;
 };
 
 

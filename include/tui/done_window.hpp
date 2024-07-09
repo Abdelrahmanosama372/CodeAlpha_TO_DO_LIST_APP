@@ -8,6 +8,7 @@ class DoneWindow : public ScrollWindow
 public:
     DoneWindow(std::string winName);
     char run() override;
+    void display() override;
 };
 
 #endif /* DONE_WINDOW_HPP */
