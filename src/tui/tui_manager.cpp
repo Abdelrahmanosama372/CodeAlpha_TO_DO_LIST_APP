@@ -5,7 +5,7 @@
 #define COLOR_BLUE_CUSTOM   10
 #define COLOR_SKY_CUSTOM    11
 #define COLOR_GRAY_CUSTOM   12
-#define COLOR_DGRAY_CUSTOM   12
+#define COLOR_DGRAY_CUSTOM   13
 
 static TodoController* todoControllerInstance = nullptr;
 
@@ -48,7 +48,6 @@ void TuiManager::tuiIntialize(std::array<std::shared_ptr<WindowBase>,5> &&_wins)
 
     wbkgd(stdscr, COLOR_PAIR(1));
     refresh();
-
 
     noecho();
 
