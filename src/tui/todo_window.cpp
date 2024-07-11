@@ -5,8 +5,7 @@ TodoWindow::TodoWindow(std::string winName)
 { }
 
 char TodoWindow::run() {
-
-    this->setWinFrame();
+    
     while (true)
     {
         this->isActiveWin = true;
