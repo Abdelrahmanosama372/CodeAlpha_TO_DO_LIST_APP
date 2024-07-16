@@ -16,22 +16,17 @@ void TodoManager::addTodo(Todo &&todo) {
 }
 
 void TodoManager::addTodo(const std::string &todo) {
-
     std::string todoName;
     std::string description;
-    std::string category;
+    std::string category = "None";
     TodoPriority priority = TodoPriority::None;
    
     std::vector<std::string> todoStrSplit = splitString(todo, ' ');
 
-    for (auto it = todoStrSplit.begin() + 1; it != todoStrSplit.end(); it++)
+
+    for (auto it = todoStrSplit.begin(); it != todoStrSplit.end(); it++)
     {
         if((*it)[0] == '@'){
-            todoName = std::accumulate(todoStrSplit.begin(),it,std::string(),
-                [](const std::string & str1, const std::string & str2)
-                {
-                    return str1 + (str1.length() > 0 ? " " : "") + str2;
-                });
             category = (*it).substr(1);
         }else if ((*it)[0] == '#'){
             if((*it).size() > 1){
@@ -59,8 +54,12 @@ void TodoManager::addTodo(const std::string &todo) {
                 {
                     return str1 + (str1.length() > 0 ? " " : "") + str2;
                 });
+        }else {
+            todoName += *it + " ";
         }
     }
+
+    todoName.pop_back();
 
     Todo todoToAdd(todoName, description, category, priority);
     addTodo(std::move(todoToAdd));

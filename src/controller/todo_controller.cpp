@@ -56,6 +56,10 @@ void TodoController::loadFromFile(const std::string& fileName) {
 
 void TodoController::handleInsertion() {
     std::string todo = this->inputWin->getInput();
+
+    if (todo.empty())
+        return;
+
     todoManager.addTodo(todo);
     this->inputWin->clear();
     this->inputWin->update();

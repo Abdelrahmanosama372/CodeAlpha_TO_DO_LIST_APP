@@ -12,12 +12,10 @@ void ScrollWindow::setRecords(std::vector<std::string> &&_records) {
 void ScrollWindow::setWinFrame() {
     this->winBegin = this->records.begin();
 
-    if(CurrRecord == this->records.end())
-        this->CurrRecord = this->records.begin();
+    this->CurrRecord = this->records.begin();
 
     if(this->getWinRows() < this->records.size() + 2 ){
-        if(this->CurrRecord == this->records.begin())
-            this->winEnd = this->records.begin() + this->getWinRows() - 2;
+        this->winEnd = this->records.begin() + this->getWinRows() - 2;
     }else {
         this->winEnd = this->records.end();
     }
@@ -87,8 +85,7 @@ void ScrollWindow::addRecord(const std::string &record) {
     this->records.push_back(record);
     
     // update the itertors
-    this->winBegin = this->records.begin();
-    this->CurrRecord = this->records.begin();
+    setWinFrame();
 }
 
 void ScrollWindow::update() {
